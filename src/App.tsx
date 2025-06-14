@@ -1,3 +1,6 @@
+import React from 'react';
+import AddVideo from './AddVideo';  // Import AddVideo component
+import VideoList from './VideoList';  // Import VideoList component
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
