@@ -1,37 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import supabase from './supabase';  // Import Supabase client
+import React, { useState } from 'react';
 
-function VideoList() {
-  const [videos, setVideos] = useState([]);
+function VideoPlayer({ video }) {
+  const [password, setPassword] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const fetchVideos = async () => {
-      const { data, error } = await supabase
-        .from('videos')
-        .select('*');
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (password === video.password) {
+      setIsAuthenticated(true);
+    } else {
+      alert('Incorrect password!');
+    }
+  };
 
-      if (error) {
-        console.error('Error fetching videos:', error.message);
-      } else {
-        setVideos(data);
-      }
-    };
-
-    fetchVideos();
-  }, []);
+  if (isAuthenticated) {
+    return (
+      <div>
+        <h3>{video.title}</h3>
+        <video controls>
+          <source src={video.video_url} type="video/mp4" />
+        </video>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      {videos.map((video) => (
-        <div key={video.id}>
-          <h3>{video.title}</h3>
-          <a href={video.video_url} target="_blank" rel="noopener noreferrer">
-            Watch Video
-          </a>
-        </div>
-      ))}
-    </div>
+    <form onSubmit={handlePasswordSubmit}>
+      <div>
+        <label>Enter Password</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
   );
 }
 
-export default VideoList;
+export default VideoPlayer;
