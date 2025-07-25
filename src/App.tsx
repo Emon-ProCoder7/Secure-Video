@@ -4,9 +4,11 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
-import Index from "./pages/Index";
+import AppLayout from "./components/AppLayout";
+import HomePage from "./pages/HomePage";
+import CreativePartnersPage from "./pages/CreativePartnersPage";
+import CareersPage from "./pages/CareersPage";
 import NotFound from "./pages/NotFound";
-import SharedVideo from "./pages/SharedVideo";
 
 const queryClient = new QueryClient();
 
@@ -17,11 +19,14 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/shared/:videoId" element={<SharedVideo />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AppLayout>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/creative-partners" element={<CreativePartnersPage />} />
+              <Route path="/careers" element={<CareersPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AppLayout>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
